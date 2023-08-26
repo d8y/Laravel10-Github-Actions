@@ -1,0 +1,43 @@
+name: Reusable Migrate
+
+on:
+  workflow_call:
+    inputs:
+      aws-role-arn:
+        required: true
+        type: string
+      aws-region:
+        required: false
+        type: string
+        default: ap-northeast-1
+      ecs-cluster:
+        required: true
+        type: string
+      task-family:
+        required: true
+        type: string
+      ecs-service-subnets:
+        required: true
+        type: string
+      ecs-service-security-group:
+        required: true
+        type: string
+
+jobs:
+  migration:
+    name: Migration
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Run
+        shell: bash
+        run: |
+          echo AWS_ROLE_ARN:${{ inputs.AWS_ROLE_ARN }}
+          echo aws-region:${{ inputs.aws-region }}
+          echo task-family:${{ inputs.ecs-cluster }}
+          echo task-family:${{ inputs.task-family }}
