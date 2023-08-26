@@ -49,6 +49,13 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
+        "clear": [
+            "php artisan optimize:clear --quiet",
+            "php artisan config:clear"
+        ],
+        "format": [
+            "phpcbf -d memory_limit=2G --standard=phpcs.xml"
+        ],
         "ide-helper": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "@php artisan ide-helper:generate",
@@ -58,15 +65,15 @@
         "lint": [
             "phpcs -d memory_limit=2G --standard=phpcs.xml"
         ],
-        "format": [
-            "phpcbf -d memory_limit=2G --standard=phpcs.xml"
+        "migrate": [
+            "php artisan migrate --seed"
+        ],
+        "test": [
+            "@php artisan optimize:clear --quiet",
+            "@php artisan test"
         ],
         "type": [
             "phpstan analyse --memory-limit=2G"
-        ],
-        "test": [
-            "composer clear",
-            "@php artisan test"
         ]
     },
     "extra": {

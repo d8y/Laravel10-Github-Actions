@@ -96,10 +96,10 @@ jobs:
           php artisan key:generate
 
       - name: Clear Config
-        run: php artisan config:clear
+        run: composer clear
 
       - name: Migration and seed
-        run: php artisan migrate:fresh --seed
+        run: composer migrate
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
