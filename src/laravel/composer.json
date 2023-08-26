@@ -63,6 +63,10 @@
         ],
         "type": [
             "phpstan analyse --memory-limit=2G"
+        ],
+        "test": [
+            "composer clear",
+            "@php artisan test"
         ]
     },
     "extra": {
