@@ -56,3 +56,4 @@ jobs:
       task-family: task-family-from-staging-build
       ecs-service-subnets: ecs-service-subnets-from-staging-build
       ecs-service-security-group: ecs-service-security-group-from-staging-build
+    secrets: inherit
