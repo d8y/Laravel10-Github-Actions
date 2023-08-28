@@ -53,3 +53,7 @@ jobs:
       ecs-service-subnets: ecs-service-subnets-from-staging-build
       ecs-service-security-group: ecs-service-security-group-from-staging-build
     secrets: inherit
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
