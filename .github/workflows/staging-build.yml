@@ -43,7 +43,9 @@ jobs:
     secrets: inherit
 
   migration:
-    needs: build
+    needs:
+      - build
+      - lint
     uses: ./.github/workflows/reusable-migrate.yml
     with:
       aws-role-arn: aws-role-arn-from-staging-build
