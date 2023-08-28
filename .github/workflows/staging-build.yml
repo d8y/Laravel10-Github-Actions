@@ -43,9 +43,9 @@ jobs:
 
       - name: show env
         run: |
-          ${{ env.AWS_ROLE_ARN }}
-          ${{ env.ECR_REGISTRY }}
-          ${{ env.ECR_REPOSITORY }}
+          echo ${{ env.AWS_ROLE_ARN }}
+          echo ${{ env.ECR_REGISTRY }}
+          echo ${{ env.ECR_REPOSITORY }}
 
   migration:
     needs: build
