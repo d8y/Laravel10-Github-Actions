@@ -45,21 +45,21 @@ jobs:
           echo task-family:${{ inputs.ecs-cluster }}
           echo task-family:${{ inputs.task-family }}
 
-  migration:
-    name: Migration
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-      pull-requests: write
-
-    steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          aws-region: ap-northeast-1
-
+#  migration:
+#    name: Migration
+#    runs-on: ubuntu-latest
+#    permissions:
+#      id-token: write
+#      contents: read
+#      pull-requests: write
+#
+#    steps:
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v2
+#        with:
+#          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+#          aws-region: ap-northeast-1
+#
 #      - name: Run Database Migration
 #        id: run-task
 #        shell: bash
