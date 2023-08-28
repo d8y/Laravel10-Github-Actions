@@ -24,10 +24,9 @@ on:
         type: string
 
 jobs:
-  migration:
-    name: Migration
+  execute-migration:
+    name: Execute Migration
     runs-on: ubuntu-latest
-    needs: build
 
     steps:
       - name: Run

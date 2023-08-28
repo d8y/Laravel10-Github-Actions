@@ -48,6 +48,7 @@ jobs:
           ${{ env.ECR_REPOSITORY }}
 
   migration:
+    needs: build
     uses: ./.github/workflows/reusable-migrate.yml
     with:
       aws-role-arn: aws-role-arn-from-staging-build
