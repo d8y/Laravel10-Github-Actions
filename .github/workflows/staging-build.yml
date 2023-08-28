@@ -22,30 +22,15 @@ env:
 
 jobs:
   lint:
+    name: lint
     uses: ./.github/workflows/reusable-lint.yml
 
   build:
     name: Build And ECR Push
-    runs-on: ubuntu-20.04
+    uses: ./.github/workflows/reusable-build.yml
     if: github.event.pull_request.merged == true
     needs:
       - lint
-
-    permissions:
-      id-token: write
-      contents: read
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: develop
-
-      - name: show env
-        run: |
-          echo ${{ env.AWS_ROLE_ARN }}
-          echo ${{ env.ECR_REGISTRY }}
-          echo ${{ env.ECR_REPOSITORY }}
 
   migration:
     needs: build

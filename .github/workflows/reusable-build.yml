@@ -1,0 +1,100 @@
+name: Reusable Migrate
+
+on:
+  workflow_call:
+    inputs:
+      aws_role_arn:
+        required: true
+        type: string
+      ecr_registry:
+        required: true
+        type: string
+      ecs_cluster:
+        required: true
+        type: string
+      supervisord_conf:
+        required: true
+        type: string
+        description: ".docker/app/conf/supervisord.staging.conf"
+      docker_file_path:
+        required: true
+        type: string
+        description: "backend/.docker/app/Dockerfile"
+      task_definition:
+        required: true
+        type: string
+        description: ".deploy/staging/app/task-definition.json"
+      ecr_repository:
+        required: true
+        type: string
+      ecs_service:
+        required: true
+        type: string
+#    outputs:
+#      task_arn:
+#        description: "ecs task arn"
+#        value: ${{ jobs.run-task.task_arn }}
+#      task_id:
+#        description: "ecs task id"
+#        value: ${{ jobs.run-task.task_id }}
+
+
+jobs:
+  build:
+    name: Build And ECR Push
+    runs-on: ubuntu-latest
+    steps:
+      - name: show env
+        run: |
+          echo ${{ env.aws_role_arn }}
+          echo ${{ env.ecr_registry }}
+          echo ${{ env.ecs_cluster }}
+          echo ${{ env.supervisord_conf }}
+          echo ${{ env.docker_file_path }}
+          echo ${{ env.task_definition }}
+          echo ${{ env.ecr_repository }}
+          echo ${{ env.ecs_service }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          ref: develop
+#
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v2
+#        with:
+#          role-to-assume: ${{ env.aws_role_arn }}
+#          aws-region: ap-northeast-1
+#
+#      - name: Docker Login
+#        uses: docker/login-action@v2
+#        id: login
+#        with:
+#          registry: ${{ env.ecr_registry }}
+#
+#      - name: Docker Build And Push
+#        uses: docker/build-push-action@v4
+#        id: build-push-action
+#        with:
+#          build-args: |
+#            SUPERVISORD_CONF=${{ env.supervisord_conf }}
+#          context: backend
+#          file: ${{ env.docker_file_path }}
+#          push: true
+#          tags: ${{ env.ecr_registry }}/${{ env.ecr_repository }}:${{ github.sha }}
+#
+#      - name: Fill in the new image ID in the Amazon ECS task definition
+#        id: task-definition
+#        uses: aws-actions/amazon-ecs-render-task-definition@v1
+#        with:
+#          task-definition: ${{ env.task_definition }}
+#          container-name: app
+#          image: ${{ env.ecr_registry }}/${{ env.ecr_repository }}:${{ github.sha }}
+#
+#      - name: Deploy Amazon ECS task definition
+#        id: deploy-task
+#        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+#        with:
+#          task-definition: ${{ steps.task-definition.outputs.task-definition }}
+#          service: ${{ env.ecs_service }}
+#          cluster: ${{ env.ecs_cluster }}
+#          wait-for-service-stability: true

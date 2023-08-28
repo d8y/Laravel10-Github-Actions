@@ -22,6 +22,14 @@ on:
       ecs-service-security-group:
         required: true
         type: string
+#    outputs:
+#      task_arn:
+#        description: "ecs task arn"
+#        value: ${{ jobs.run-task.task_arn }}
+#      task_id:
+#        description: "ecs task id"
+#        value: ${{ jobs.run-task.task_id }}
+
 
 jobs:
   execute-migration:
@@ -36,3 +44,73 @@ jobs:
           echo aws-region:${{ inputs.aws-region }}
           echo task-family:${{ inputs.ecs-cluster }}
           echo task-family:${{ inputs.task-family }}
+
+  migration:
+    name: Migration
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ap-northeast-1
+
+#      - name: Run Database Migration
+#        id: run-task
+#        shell: bash
+#        run: |
+#          task_definition=$(aws ecs describe-task-definition --task-definition ${{ env.TASK_FAMILY }} --query taskDefinition | jq -r '.taskDefinitionArn')
+#          echo "::group::run task for migration"
+#          task_arn=$(aws ecs run-task \
+#            --launch-type FARGATE \
+#            --cluster ${{ env.ECS_CLUSTER }} \
+#            --network-configuration "awsvpcConfiguration={subnets=[${{ env.ECS_SERVICE_SUBNETS }}],securityGroups=[${{ env.ECS_SERVICE_SECURITY_GROUP }}],assignPublicIp=DISABLED}" \
+#            --task-definition $task_definition \
+#            --overrides '{"containerOverrides": [{"name": "app", "command": ["php","artisan","migrate","--force"]}]}' \
+#            --query tasks[0].taskArn --output text)
+#          echo "task_arn=$task_arn" >> $GITHUB_OUTPUT
+#          echo "task_id=${task_arn/*\//}" >> $GITHUB_OUTPUT
+#          echo "::endgroup::"
+#
+#      - name: Install ecs-cli
+#        shell: bash
+#        env:
+#          ECS_CLI_VERSION: v1.21.0
+#        run: |
+#          echo "::group::Install ecs cli"
+#          sudo curl -Lo /usr/local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-${{ env.ECS_CLI_VERSION }}
+#          sudo chmod +x /usr/local/bin/ecs-cli
+#          echo "::endgroup::"
+#
+#            - name: Retrieve container logs from CloudWatch logs
+#        id: migration_logs
+#        shell: bash
+#        run: |
+#          echo "::group::migration logs"
+#          logs=$(ecs-cli logs --timestamps \
+#            --cluster ${{ env.ECS_CLUSTER }} \
+#            --task-id ${{ steps.run-task.outputs.task_id }} )
+#          logs="${logs//'%'/'%25'}"
+#          logs="${logs//$'\n'/'%0A'}"
+#          logs="${logs//$'\r'/'%0D'}"
+#          logs="${logs//$'^'/'d'}"
+#          echo "logs=$logs" >> $GITHUB_OUTPUT
+#          echo "::endgroup::"
+#
+#      - name: comment
+#        uses: peter-evans/create-or-update-comment@v2
+#        with:
+#          issue-number: ${{ github.event.pull_request.number }}
+#          body: |
+#            <details><summary>Logs</summary>
+#
+#            ```
+#            ${{ steps.migration_logs.outputs.logs }}
+#            ```
+#            </details>
