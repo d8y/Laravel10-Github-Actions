@@ -6,8 +6,8 @@ on:
       - develop
     types:
       - closed
-    paths:
-      - src/laravel/**
+#    paths:
+#      - src/laravel/**
   workflow_dispatch:
 
 env:
