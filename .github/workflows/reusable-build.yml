@@ -46,14 +46,14 @@ jobs:
     steps:
       - name: show env
         run: |
-          echo ${{ env.aws_role_arn }}
-          echo ${{ env.ecr_registry }}
-          echo ${{ env.ecs_cluster }}
-          echo ${{ env.supervisord_conf }}
-          echo ${{ env.docker_file_path }}
-          echo ${{ env.task_definition }}
-          echo ${{ env.ecr_repository }}
-          echo ${{ env.ecs_service }}
+          echo ${{ inputs.aws_role_arn }}
+          echo ${{ inputs.ecr_registry }}
+          echo ${{ inputs.ecs_cluster }}
+          echo ${{ inputs.supervisord_conf }}
+          echo ${{ inputs.docker_file_path }}
+          echo ${{ inputs.task_definition }}
+          echo ${{ inputs.ecr_repository }}
+          echo ${{ inputs.ecs_service }}
 
 #      - name: Checkout
 #        uses: actions/checkout@v3
