@@ -3,6 +3,9 @@ name: Reusable Migrate
 on:
   workflow_call:
     inputs:
+      environment:
+        required: true
+        type: string
       aws_role_arn:
         required: true
         type: string
@@ -35,11 +38,13 @@ jobs:
   execute-migration:
     name: Execute Migration
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
 
     steps:
       - name: Run
         shell: bash
         run: |
+          echo environment:${{ inputs.environment }}
           echo AWS_ROLE_ARN:${{ inputs.aws_role_arn }}
           echo aws-region:${{ inputs.aws_region }}
           echo task-family:${{ inputs.ecs_cluster }}
