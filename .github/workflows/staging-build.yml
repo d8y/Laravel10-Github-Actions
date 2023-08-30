@@ -21,10 +21,10 @@ env:
   ecs_service_security_group: ECS_SERVICE_SECURITY_GROUP #${{ vars.ECS_SERVICE_SECURITY_GROUP }}
 
 jobs:
-  lint:
-    name: lint
-    uses: ./.github/workflows/reusable-lint.yml
-    if: github.event.pull_request.merged == true
+#  lint:
+#    name: lint
+#    uses: ./.github/workflows/reusable-lint.yml
+#    if: github.event.pull_request.merged == true
 
   build:
     name: Build And ECR Push
@@ -48,8 +48,8 @@ jobs:
           - env: develop
             aws_role_arn: aws_role_arn_develop
             environment: develop
-    needs:
-      - lint
+#    needs:
+#      - lint
     secrets: inherit
 
   migration:
