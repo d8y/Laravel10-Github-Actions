@@ -30,7 +30,7 @@ jobs:
     name: Build And ECR Push
     uses: ./.github/workflows/reusable-build.yml
     with:
-      aws_role_arn: aws_role_arn
+      aws_role_arn: ${{ env.aws_role_arn }}
       ecr_registry: ecr_registry
       ecs_cluster: ecs_cluster
       supervisord_conf: supervisord_conf
@@ -38,6 +38,13 @@ jobs:
       task_definition: task_definition
       ecr_repository: ecr_repository
       ecs_service: ecs_service
+    strategy:
+      matrix:
+        include:
+          - env: production
+            aws_role_arn: aws_role_arn_production
+          - env: develop
+            aws_role_arn: aws_role_arn_develop
     needs:
       - lint
     secrets: inherit
