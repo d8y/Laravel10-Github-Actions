@@ -55,8 +55,8 @@ jobs:
 #      - lint
     uses: ./.github/workflows/reusable-migrate.yml
     with:
-      aws_role_arn: ${{ secrets.aws_role_arn }}
-      aws_region: ${{ vars.aws_region }}
+      aws_role_arn: ${{ secrets.AWS_ROLE_ARN }}
+      aws_region: ${{ vars.AWS_REGION }}
       ecs_cluster: ecs_cluster_trial
       task_family: task_family_trial
       ecs_service_subnets: ecs_service_subnets_trial
