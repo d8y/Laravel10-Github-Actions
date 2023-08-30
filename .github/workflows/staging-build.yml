@@ -43,7 +43,7 @@ jobs:
       matrix:
         include:
           - env: develop
-            aws_role_arn: aws_role_arn_develop
+            aws_role_arn: ${{ secrets.AWS_ROLE_ARN }}
             environment: staging
 #    needs:
 #      - lint
@@ -54,6 +54,7 @@ jobs:
       - build
 #      - lint
     uses: ./.github/workflows/reusable-migrate.yml
+    environment: staging
     with:
       environment: staging
       aws_role_arn: aws_role_arn
