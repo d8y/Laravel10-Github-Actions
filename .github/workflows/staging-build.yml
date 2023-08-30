@@ -30,7 +30,7 @@ jobs:
     name: Build And ECR Push
     uses: ./.github/workflows/reusable-build.yml
     with:
-      environment: ${{ matrix.environment }}
+      environment: develop
       aws_role_arn: ${{ matrix.aws_role_arn }}
       ecr_registry: ecr_registry
       ecs_cluster: ecs_cluster
