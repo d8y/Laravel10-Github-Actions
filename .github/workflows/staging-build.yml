@@ -30,7 +30,7 @@ jobs:
     name: Build And ECR Push
     uses: ./.github/workflows/reusable-build.yml
     with:
-      environment: develop
+      environment: ${{ matrix.environment }}
       aws_role_arn: ${{ matrix.aws_role_arn }}
       ecr_registry: ecr_registry
       ecs_cluster: ecs_cluster
@@ -42,12 +42,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - env: production
-            aws_role_arn: aws_role_arn_production
-            environment: main
           - env: develop
             aws_role_arn: aws_role_arn_develop
-            environment: develop
+            environment: staging
 #    needs:
 #      - lint
     secrets: inherit
@@ -58,12 +55,13 @@ jobs:
 #      - lint
     uses: ./.github/workflows/reusable-migrate.yml
     with:
-      aws-role-arn: aws-role-arn-from-staging-build
-      aws-region: aws-region-from-staging-build
-      ecs-cluster: ecs-cluster-from-staging-build
-      task-family: task-family-from-staging-build
-      ecs-service-subnets: ecs-service-subnets-from-staging-build
-      ecs-service-security-group: ecs-service-security-group-from-staging-build
+      aws_role_arn: ${{ secrets.aws_role_arn }}
+      aws_region: ${{ vars.aws_region }}
+      ecs_cluster: ecs_cluster_trial
+      task_family: task_family_trial
+      ecs_service_subnets: ecs_service_subnets_trial
+      ecs_service_security_group: ecs_service_security_group_trial
+      environment: staging
     secrets: inherit
     permissions:
       id-token: write
