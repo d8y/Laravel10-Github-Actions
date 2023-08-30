@@ -55,7 +55,7 @@ jobs:
   migration:
     needs:
       - build
-      - lint
+#      - lint
     uses: ./.github/workflows/reusable-migrate.yml
     with:
       aws-role-arn: aws-role-arn-from-staging-build

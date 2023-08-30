@@ -50,6 +50,8 @@ jobs:
     steps:
       - name: show env
         run: |
+          echo ${{ secrets.test }}
+          echo ${{ vars.TEST_VARIABLE }}
           echo ${{ inputs.environment }}
           echo ${{ inputs.aws_role_arn }}
           echo ${{ inputs.ecr_registry }}
