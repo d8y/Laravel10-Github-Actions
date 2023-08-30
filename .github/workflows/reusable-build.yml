@@ -3,6 +3,9 @@ name: Reusable build
 on:
   workflow_call:
     inputs:
+      environment:
+        required: true
+        type: string
       aws_role_arn:
         required: true
         type: string
@@ -43,9 +46,11 @@ jobs:
   build:
     name: Build And ECR Push
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - name: show env
         run: |
+          echo ${{ inputs.environment }}
           echo ${{ inputs.aws_role_arn }}
           echo ${{ inputs.ecr_registry }}
           echo ${{ inputs.ecs_cluster }}
