@@ -52,7 +52,6 @@ jobs:
         run: |
           echo ${{ secrets.AWS_ROLE_ARN }}
           echo ${{ inputs.aws_role_arn }}
-          echo ${{ vars.TEST_VARIABLE }}
           echo ${{ inputs.environment }}
           echo ${{ inputs.aws_role_arn }}
           echo ${{ inputs.ecr_registry }}
