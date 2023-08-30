@@ -12,13 +12,3 @@ jobs:
   lint:
     uses: ./.github/workflows/reusable-lint.yml
 
-  add:
-    name: lint additional
-    runs-on: ubuntu-20.04
-    needs: lint
-
-    steps:
-      - name: run
-        run: |
-          echo "lint additional run"
-
