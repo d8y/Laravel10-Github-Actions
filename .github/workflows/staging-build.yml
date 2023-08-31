@@ -29,7 +29,6 @@ jobs:
   build:
     name: Build And ECR Push
     uses: ./.github/workflows/reusable-build.yml
-    environment: ${{ matrix.environment }}
     with:
       environment: ${{ matrix.environment }}
       aws_role_arn: ${{ matrix.aws_role_arn }}
@@ -55,7 +54,6 @@ jobs:
       - build
 #      - lint
     uses: ./.github/workflows/reusable-migrate.yml
-    environment: staging
     with:
       environment: staging
       aws_role_arn: aws_role_arn
