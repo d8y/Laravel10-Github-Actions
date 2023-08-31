@@ -51,6 +51,7 @@ jobs:
       - name: show env
         run: |
           echo ${{ secrets.AWS_ROLE_ARN }}
+          echo ${{ vars.AWS_REGION }}
           echo ${{ inputs.aws_role_arn }}
           echo ${{ inputs.environment }}
           echo ${{ inputs.aws_role_arn }}
