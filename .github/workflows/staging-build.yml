@@ -31,7 +31,7 @@ jobs:
     uses: ./.github/workflows/reusable-build.yml
     with:
       environment: ${{ matrix.environment }}
-      aws_role_arn: ${{ matrix.aws_role_arn }}
+      aws_role_arn: aws_role_arn
       ecr_registry: ecr_registry
       ecs_cluster: ecs_cluster
       supervisord_conf: supervisord_conf
@@ -43,7 +43,6 @@ jobs:
       matrix:
         include:
           - env: develop
-            aws_role_arn: ${{ secrets.AWS_ROLE_ARN }}
             environment: staging
 #    needs:
 #      - lint
