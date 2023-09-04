@@ -1,0 +1,60 @@
+name: Staging Deploy to Amazon ECS
+
+on:
+  pull_request:
+    branches:
+      - develop
+    types:
+      - closed
+#    paths:
+#      - src/laravel/**
+  workflow_dispatch:
+
+env:
+  ecs_cluster: ECS_CLUSTER
+  ecs_service: ECS_SERVICE
+  ecr_registry: ECR_REGISTRY # ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com
+  ecr_repository: ECR_REPOSITORY
+  task_family: TASK_FAMILY
+
+jobs:
+#  lint:
+#    name: lint
+#    uses: ./.github/workflows/reusable-lint.yml
+#    if: github.event.pull_request.merged == true
+
+  build:
+    name: Build And ECR Push
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      environment: ${{ matrix.environment }}
+      ecr_registry: ecr_registry
+      ecs_cluster: ecs_cluster
+      supervisord_conf: supervisord_conf
+      docker_file_path: docker_file_path
+      task_definition: task_definition
+      ecr_repository: ecr_repository
+      ecs_service: ecs_service
+    strategy:
+      matrix:
+        include:
+          - env: develop
+            environment: staging
+#    needs:
+#      - lint
+    secrets: inherit
+
+  migration:
+    needs:
+      - build
+    uses: ./.github/workflows/reusable-migrate.yml
+    with:
+      environment: staging
+      aws_region: aws_region
+      ecs_cluster: ecs_cluster_trial
+      task_family: task_family_trial
+    secrets: inherit
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write

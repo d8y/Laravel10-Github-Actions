@@ -1,0 +1,14 @@
+name: Lint
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - src/laravel/**
+
+jobs:
+  lint:
+    uses: ./.github/workflows/reusable-lint.yml
+
