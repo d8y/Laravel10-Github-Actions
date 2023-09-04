@@ -29,7 +29,6 @@ jobs:
     name: Execute Migration
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-
     steps:
       - name: Run
         shell: bash
