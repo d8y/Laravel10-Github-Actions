@@ -40,9 +40,9 @@ jobs:
       matrix:
         include:
           - env: production
-            environment: main
+            environment: production
           - env: trial
-            environment: main
+            environment: trial
 #    needs:
 #      - lint
     secrets: inherit
