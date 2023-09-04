@@ -16,12 +16,6 @@ on:
       task_family:
         required: true
         type: string
-      ecs_service_subnets:
-        required: true
-        type: string
-      ecs_service_security_group:
-        required: true
-        type: string
 #    outputs:
 #      task_arn:
 #        description: "ecs task arn"
