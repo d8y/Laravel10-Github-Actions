@@ -6,9 +6,6 @@ on:
       environment:
         required: true
         type: string
-      aws_role_arn:
-        required: true
-        type: string
       ecr_registry:
         required: true
         type: string
@@ -51,10 +48,7 @@ jobs:
       - name: show env
         run: |
           echo ${{ secrets.AWS_ROLE_ARN }}
-          echo ${{ vars.AWS_REGION }}
-          echo ${{ inputs.aws_role_arn }}
           echo ${{ inputs.environment }}
-          echo ${{ inputs.aws_role_arn }}
           echo ${{ inputs.ecr_registry }}
           echo ${{ inputs.ecs_cluster }}
           echo ${{ inputs.supervisord_conf }}

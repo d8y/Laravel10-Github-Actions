@@ -6,9 +6,6 @@ on:
       environment:
         required: true
         type: string
-      aws_role_arn:
-        required: true
-        type: string
       aws_region:
         required: false
         type: string
@@ -33,7 +30,6 @@ on:
 #        description: "ecs task id"
 #        value: ${{ jobs.run-task.task_id }}
 
-
 jobs:
   execute-migration:
     name: Execute Migration
@@ -45,10 +41,12 @@ jobs:
         shell: bash
         run: |
           echo environment:${{ inputs.environment }}
-          echo AWS_ROLE_ARN:${{ inputs.aws_role_arn }}
-          echo aws-region:${{ inputs.aws_region }}
-          echo task-family:${{ inputs.ecs_cluster }}
-          echo task-family:${{ inputs.task_family }}
+          echo aws_role_arn:${{ secrets.AWS_ROLE_ARN }}
+          echo aws_region:${{ inputs.aws_region }}
+          echo ecs_cluster:${{ inputs.ecs_cluster }}
+          echo task_family:${{ inputs.task_family }}
+          echo ecs_service_subnets:${{ secrets.ECS_SERVICE_SUBNETS }}
+          echo ecs_service_security_group:${{ secrets.ECS_SERVICE_SECURITY_GROUP }}
 
 #  migration:
 #    name: Migration
