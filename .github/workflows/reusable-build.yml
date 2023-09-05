@@ -38,6 +38,9 @@ on:
 #        description: "ecs task id"
 #        value: ${{ jobs.run-task.task_id }}
 
+env:
+  AWS_ROLE_ARN_FROM_SECRETS: ${{ secrets.AWS_ROLE_ARN }}
+
 
 jobs:
   build:
@@ -47,6 +50,7 @@ jobs:
     steps:
       - name: show env
         run: |
+          echo AWS_ROLE_ARN_FROM_SECRETS: ${{ env.AWS_ROLE_ARN_FROM_SECRETS }}
           echo inputs.environment: ${{ inputs.environment }}
           echo secrets.AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
           echo inputs.ecr_registry: ${{ inputs.ecr_registry }}
