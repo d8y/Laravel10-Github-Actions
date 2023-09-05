@@ -57,6 +57,8 @@ jobs:
           echo inputs.ecr_repository: ${{ inputs.ecr_repository }}
           echo inputs.ecs_service: ${{ inputs.ecs_service }}
 
+# 以下はsample
+#
 #      - name: Checkout
 #        uses: actions/checkout@v3
 #        with:

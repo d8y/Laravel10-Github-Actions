@@ -41,6 +41,8 @@ jobs:
           echo ecs_service_subnets: ${{ secrets.ECS_SERVICE_SUBNETS }}
           echo ecs_service_security_group: ${{ secrets.ECS_SERVICE_SECURITY_GROUP }}
 
+# 以下はsample
+#
 #  migration:
 #    name: Migration
 #    runs-on: ubuntu-latest
