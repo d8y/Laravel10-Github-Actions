@@ -29,7 +29,7 @@ jobs:
     uses: ./.github/workflows/reusable-build.yml
     with:
       environment: ${{ matrix.ENVIRONMENT }}
-      ecr_registry: $${{ env.ECR_REGISTRY }}
+      ecr_registry: ECR_REGISTRY
       ecs_cluster: ecs_cluster
       supervisord_conf: supervisord_conf
       docker_file_path: docker_file_path
