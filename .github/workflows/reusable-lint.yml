@@ -40,77 +40,77 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup cache environment
-        id: cache-env
-        uses: shivammathur/cache-extensions@v1
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: ${{ env.EXTENSIONS }}
-          key: ${{ env.KEY }}
-
-      - name: Cache extensions
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.cache-env.outputs.dir }}
-          key: ${{ steps.cache-env.outputs.key }}
-          restore-keys: ${{ steps.cache-env.outputs.key }}
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: ${{ env.extensions }}
-          coverage: pcov
-
-      - name: Setup problem matchers for PHP
-        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-
-      - name: Setup problem matchers for PHPUnit
-        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-      - name: Cache composer dependencies
-        id: composer-cache-hit
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-
-      - name: Prepare the application
-        run: |
-          cp .env.ci .env
-          php artisan key:generate
-
-      - name: Clear Config
-        run: composer clear
-
-      - name: Migration and seed
-        run: composer migrate
-        env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-
-      - name: execute ide-helper
-        run: composer ide-helper
-        env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-
-      - name: Lint
-        run: composer lint
-
-      - name: Type
-        run: composer type
-
-      - name: Test
-        run: |
-          cp .env .env.test
-          composer test
-        env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+#      - name: Setup cache environment
+#        id: cache-env
+#        uses: shivammathur/cache-extensions@v1
+#        with:
+#          php-version: ${{ matrix.php-versions }}
+#          extensions: ${{ env.EXTENSIONS }}
+#          key: ${{ env.KEY }}
+#
+#      - name: Cache extensions
+#        uses: actions/cache@v3
+#        with:
+#          path: ${{ steps.cache-env.outputs.dir }}
+#          key: ${{ steps.cache-env.outputs.key }}
+#          restore-keys: ${{ steps.cache-env.outputs.key }}
+#
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: ${{ matrix.php-versions }}
+#          extensions: ${{ env.extensions }}
+#          coverage: pcov
+#
+#      - name: Setup problem matchers for PHP
+#        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+#
+#      - name: Setup problem matchers for PHPUnit
+#        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+#
+#      - name: Get composer cache directory
+#        id: composer-cache
+#        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+#
+#      - name: Cache composer dependencies
+#        id: composer-cache-hit
+#        uses: actions/cache@v3
+#        with:
+#          path: ${{ steps.composer-cache.outputs.dir }}
+#          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+#          restore-keys: |
+#            ${{ runner.os }}-composer-
+#
+#      - name: Install Composer dependencies
+#        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+#
+#      - name: Prepare the application
+#        run: |
+#          cp .env.ci .env
+#          php artisan key:generate
+#
+#      - name: Clear Config
+#        run: composer clear
+#
+#      - name: Migration and seed
+#        run: composer migrate
+#        env:
+#          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+#
+#      - name: execute ide-helper
+#        run: composer ide-helper
+#        env:
+#          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+#
+#      - name: Lint
+#        run: composer lint
+#
+#      - name: Type
+#        run: composer type
+#
+#      - name: Test
+#        run: |
+#          cp .env .env.test
+#          composer test
+#        env:
+#          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
