@@ -39,8 +39,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - env: develop
-            environment: staging
+            - environment: staging
 #    needs:
 #      - lint
     secrets: inherit
