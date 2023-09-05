@@ -39,7 +39,7 @@ on:
 #        value: ${{ jobs.run-task.task_id }}
 
 env:
-  AWS_ROLE_ARN_FROM_SECRETS: ${{ secrets.AWS_ROLE_ARN }}
+  AWS_ROLE_ARN_FROM_SECRETS: arn::${{ secrets.AWS_ROLE_ARN }}:role/
 
 
 jobs:
