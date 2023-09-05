@@ -11,11 +11,12 @@ on:
   workflow_dispatch:
 
 env:
-  ecs_cluster: ECS_CLUSTER
-  ecs_service: ECS_SERVICE
-  ecr_registry: ECR_REGISTRY # ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com
-  ecr_repository: ECR_REPOSITORY
-  task_family: TASK_FAMILY
+  ENVIRONMENT: staging
+  ECS_CLUSTER: ECS_CLUSTER
+  ECS_SERVICE: ECS_SERVICE
+  ECR_REGISTRY: ECR_REGISTRY # ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com
+  ECR_REPOSITORY: ECR_REPOSITORY
+  TASK_FAMILY: TASK_FAMILY
 
 jobs:
 #  lint:
@@ -27,7 +28,7 @@ jobs:
     name: Build And ECR Push
     uses: ./.github/workflows/reusable-build.yml
     with:
-      environment: ${{ matrix.environment }}
+      environment: ${{ matrix.ENVIRONMENT }}
       ecr_registry: ecr_registry
       ecs_cluster: ecs_cluster
       supervisord_conf: supervisord_conf
