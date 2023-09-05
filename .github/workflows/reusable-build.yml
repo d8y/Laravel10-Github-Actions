@@ -53,6 +53,7 @@ jobs:
           echo AWS_ROLE_ARN_FROM_SECRETS: ${{ env.AWS_ROLE_ARN_FROM_SECRETS }}
           echo inputs.environment: ${{ inputs.environment }}
           echo secrets.AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+          echo secrets.AWS_ROLE_ARN_GLOBAL: ${{ secrets.AWS_ROLE_ARN }}
           echo inputs.ecr_registry: ${{ inputs.ecr_registry }}
           echo inputs.ecs_cluster: ${{ inputs.ecs_cluster }}
           echo inputs.supervisord_conf: ${{ inputs.supervisord_conf }}
