@@ -38,15 +38,14 @@ on:
 #        description: "ecs task id"
 #        value: ${{ jobs.run-task.task_id }}
 
-env:
-  aws_role_arn_from_secrets: arn::${{ secrets.AWS_ROLE_ARN }}:role/
-
 
 jobs:
   build:
     name: Build And ECR Push
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    env:
+      aws_role_arn_from_secrets: arn::${{ secrets.AWS_ROLE_ARN }}:role/
     steps:
       - name: show env
         run: |
