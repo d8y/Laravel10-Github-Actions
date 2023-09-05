@@ -39,7 +39,7 @@ on:
 #        value: ${{ jobs.run-task.task_id }}
 
 env:
-  AWS_ROLE_ARN_FROM_SECRETS: arn::${{ secrets.AWS_ROLE_ARN }}:role/
+  aws_role_arn_from_secrets: arn::${{ secrets.AWS_ROLE_ARN }}:role/
 
 
 jobs:
@@ -50,7 +50,7 @@ jobs:
     steps:
       - name: show env
         run: |
-          echo AWS_ROLE_ARN_FROM_SECRETS: ${{ env.AWS_ROLE_ARN_FROM_SECRETS }}
+          echo AWS_ROLE_ARN_FROM_SECRETS: ${{ env.aws_role_arn_from_secrets }}
           echo inputs.environment: ${{ inputs.environment }}
           echo secrets.AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
           echo secrets.AWS_ROLE_ARN_GLOBAL: ${{ secrets.AWS_ROLE_ARN }}
@@ -61,6 +61,12 @@ jobs:
           echo inputs.task_definition: ${{ inputs.task_definition }}
           echo inputs.ecr_repository: ${{ inputs.ecr_repository }}
           echo inputs.ecs_service: ${{ inputs.ecs_service }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ env.aws_role_arn_from_secrets }}
+          aws-region: ${{ inputs.ecr_registry }}
 
 # 以下はsample
 #
